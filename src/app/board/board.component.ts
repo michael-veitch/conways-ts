@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Cell } from '../models/cell';
 
 @Component({
@@ -6,10 +6,11 @@ import { Cell } from '../models/cell';
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.css']
 })
-export class BoardComponent implements OnInit {
+export class BoardComponent implements OnInit, OnChanges {
 
-  @Input()
-  public cells: Cell[];
+
+  public cells: Cell[][];
+  @Input() size: number;
 
   constructor() { }
 
