@@ -16,7 +16,7 @@ export class CellComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.isAlive = this.cell.alive;
+    this.isAlive = this.cell.isAlive;
   }
 
 }

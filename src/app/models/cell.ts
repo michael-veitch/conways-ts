@@ -1,5 +1,5 @@
 export class Cell {
-    public alive: boolean;
+    constructor(public isAlive: boolean) { }
     public rowIndex: number;
     public columnIndex: number;
 }

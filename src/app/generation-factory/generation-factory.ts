@@ -1,11 +1,10 @@
-import { Cell } from "../models/cell";
-import { Output } from "@angular/core";
-import { CellHelper } from "./helpers/cell-helper";
+import { Cell } from '../models/cell';
+import { Output, EventEmitter } from '@angular/core';
+import { CellHelper } from './helpers/cell-helper';
 
 export class GenerationFactory {
-    
-    @Output()
-    public nextGeneration: Cell[][];
+
+    @Output() public nextGeneration: EventEmitter<Cell[][]> = new EventEmitter<Cell[][]>();
 
     public rowIndex = 0;
     public columnIndex = 0;
@@ -18,7 +17,7 @@ export class GenerationFactory {
     }
 
     public getNextBoard(): void {
-        let nextBoard: Cell[][] = [];
+        const nextBoard: Cell[][] = [];
         this.cells.forEach((row) => {
             row.forEach((cell) => {
                 nextBoard[this.rowIndex][this.columnIndex] = this.getNextCell(cell);
@@ -26,10 +25,10 @@ export class GenerationFactory {
             });
             this.rowIndex++;
         });
-        this.nextGeneration = Array.from(nextBoard);
+        this.nextGeneration.emit(nextBoard);
     }
 
     public getNextCell(cell: Cell): Cell {
-        return CellHelper.applyRules(cell);
+        return this.cellHelper.applyRules(cell);
     }
 }
