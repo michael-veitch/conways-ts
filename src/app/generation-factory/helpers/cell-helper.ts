@@ -29,7 +29,7 @@ export class CellHelper implements IBoardIterator {
             for (let col = startingColumn; col <= lastColumn; col++) {
                 if (!(row === cell.rowIndex && col === cell.columnIndex)) {
                     var neighbour = cells.find((cell) => cell.rowIndex === row && cell.columnIndex === col);
-                    if (neighbour.isAlive) {
+                    if (neighbour && neighbour.isAlive) {
                         count++;
                     }
                 }
@@ -44,17 +44,19 @@ export class CellHelper implements IBoardIterator {
             return true;
         }
 
-        if (neighbourCount >= 2 && neighbourCount <= 3) {
+        if (cell.isAlive && neighbourCount >= 2 && neighbourCount <= 3) {
             return true;
         }
 
-        if (neighbourCount < 2) {
+        if (cell.isAlive && neighbourCount < 2) {
             return false;
         }
 
-        if (neighbourCount > 3) {
+        if (cell.isAlive && neighbourCount > 3) {
             return false;
         }
+
+        return false;
 
     }
 }

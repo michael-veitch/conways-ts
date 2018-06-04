@@ -5,31 +5,16 @@ import { IBoardIterator } from './interfaces/board-iterator';
 
 export class GenerationFactory {
 
-    @Output() public nextGeneration: EventEmitter<Cell[][]> = new EventEmitter<Cell[][]>();
+    @Output() public nextGeneration: EventEmitter<Cell[]> = new EventEmitter<Cell[]>();
 
-    public rowIndex = 0;
-    public columnIndex = 0;
-
-    public generationHelper: IBoardIterator;
-
-    constructor(public cells: Cell[][]) {
-        this.generationHelper = new CellHelper();
-        this.getNextBoard();
+    constructor(private cellHelper: IBoardIterator) {
     }
 
-    public getNextBoard(): void {
-        const nextBoard: Cell[][] = [];
-        this.cells.forEach((row) => {
-            row.forEach((cell) => {
-                nextBoard[this.rowIndex][this.columnIndex] = this.getNextCell(cell);
-                this.columnIndex++;
-            });
-            this.rowIndex++;
+    public getNextGenBoard(cells: Cell[]): void {
+        let nextBoard: Cell[] = [];
+        cells.forEach((cell) => {
+            nextBoard.push(this.cellHelper.getNextGenCell(cell, cells));
         });
         this.nextGeneration.emit(nextBoard);
-    }
-
-    public getNextCell(cell: Cell): Cell {
-        return this.generationHelper.getNextGenCell(cell, this.cells);
     }
 }
