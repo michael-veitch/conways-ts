@@ -1,55 +1,60 @@
 import { Cell } from '../../models/cell';
+import { IBoardIterator } from '../interfaces/board-iterator';
 
-export class CellHelper {
+export class CellHelper implements IBoardIterator {
 
 
-    constructor(public board: Cell[][]) {
+    constructor() {
 
     }
 
-    public applyRules(cell: Cell): Cell {
-        let nextGenCell: Cell;
-        const neighbours = this.getNeighbours(cell);
-        const willCellLive = this.doesCellLive(neighbours, cell.isAlive);
-        nextGenCell = new Cell(willCellLive);
-        return nextGenCell;
+    public getNextGenCell(cell: Cell, board: Cell[]): Cell {
+
+        let neighbours = this.getNeighbours(cell, board);
+        let cellLives = this.doesCellLive(cell, neighbours);
+        let nextGenCell = new Cell(cellLives, cell.rowIndex, cell.columnIndex);
+        
+        return nextGenCell;        
     }
 
-    protected getNeighbours(cell: Cell): number {
-        let count: number;
+    public getNeighbours(cell: Cell, cells: Cell[]): number {
 
-        for (let row = cell.rowIndex - 1; row < cell.rowIndex + 1; row++) {
-            for (let col = cell.columnIndex - 1; col < cell.columnIndex + 1; col++) {
+        let count = 0;
+        let startingRow = cell.rowIndex > 0 ? cell.rowIndex - 1 : 0
+        let startingColumn = cell.columnIndex > 0 ? cell.columnIndex - 1 : 0;
+        let lastRow = cell.rowIndex + 1;
+        let lastColumn = cell.columnIndex + 1;
 
-                if (row === cell.rowIndex && col === cell.columnIndex) {
-                    break;
+        for (let row = startingRow; row <= lastRow; row++) {
+            for (let col = startingColumn; col <= lastColumn; col++) {
+                if (!(row === cell.rowIndex && col === cell.columnIndex)) {
+                    var neighbour = cells.find((cell) => cell.rowIndex === row && cell.columnIndex === col);
+                    if (neighbour.isAlive) {
+                        count++;
+                    }
                 }
-
-                if (this.board[row][col].isAlive) {
-                    count++;
-                }
-
             }
         }
-
         return count;
     }
 
-    protected doesCellLive(neighbours: number, isCellAlive: boolean): boolean {
-        if (neighbours < 2) {
-            return false;
-        }
-
-        if (neighbours >= 2 || neighbours <= 3) {
+    public doesCellLive(cell: Cell, neighbourCount: number): boolean {
+        
+        if (!cell.isAlive && neighbourCount === 3) {
             return true;
         }
 
-        if (neighbours > 3) {
+        if (neighbourCount >= 2 && neighbourCount <= 3) {
+            return true;
+        }
+
+        if (neighbourCount < 2) {
             return false;
         }
 
-        if (!isCellAlive && neighbours === 3) {
-            return true;
+        if (neighbourCount > 3) {
+            return false;
         }
+
     }
 }

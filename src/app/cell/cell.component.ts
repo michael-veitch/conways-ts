@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Cell } from '../models/cell';
 
 @Component({
@@ -10,9 +10,9 @@ export class CellComponent implements OnInit {
 
   public isAlive: boolean;
 
-  @Input()
-  public cell: Cell;
-
+  @Input() cell: Cell;
+  @Output() stateChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
+  
   constructor() { }
 
   ngOnInit() {
@@ -24,6 +24,7 @@ export class CellComponent implements OnInit {
 
   public toggleState(): void {
     this.isAlive = !this.isAlive;
+    this.stateChanged.emit(this.isAlive);
   }
 
 }

@@ -6,10 +6,10 @@ import { Cell } from '../models/cell';
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.css']
 })
-export class BoardComponent implements OnInit, OnChanges {
+export class BoardComponent implements OnInit{
 
 
-  public cells: Cell[][];
+  public cells: Cell[];
   @Input() size: number;
 
   constructor() { }

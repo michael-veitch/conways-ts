@@ -1,6 +1,7 @@
 import { Cell } from '../models/cell';
 import { Output, EventEmitter } from '@angular/core';
 import { CellHelper } from './helpers/cell-helper';
+import { IBoardIterator } from './interfaces/board-iterator';
 
 export class GenerationFactory {
 
@@ -9,10 +10,10 @@ export class GenerationFactory {
     public rowIndex = 0;
     public columnIndex = 0;
 
-    public cellHelper: CellHelper;
+    public generationHelper: IBoardIterator;
 
     constructor(public cells: Cell[][]) {
-        this.cellHelper = new CellHelper(this.cells);
+        this.generationHelper = new CellHelper();
         this.getNextBoard();
     }
 
@@ -29,6 +30,6 @@ export class GenerationFactory {
     }
 
     public getNextCell(cell: Cell): Cell {
-        return this.cellHelper.applyRules(cell);
+        return this.generationHelper.getNextGenCell(cell, this.cells);
     }
 }

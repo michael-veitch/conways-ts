@@ -9,15 +9,15 @@ export class BoardContainerComponent implements OnInit {
 
   constructor() { }
 
-  public size = 10;
+  public boardSize = 10;
 
   ngOnInit() {
 
   }
 
   public changeSize(size: number) {
-    this.size = size;
-    console.log(this.size);
+    this.boardSize = size;
+    console.log(this.boardSize);
   }
 
 }
