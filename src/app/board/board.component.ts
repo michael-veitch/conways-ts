@@ -25,21 +25,28 @@ export class BoardComponent implements OnInit, OnChanges{
   
   ngOnInit() {
     this.cells = this.builder.build(this.size);
-    this.board = this.mapToBoard(this.cells);
+    this.mapToBoard(this.cells);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.cells = this.builder.build(this.size);
-    this.board = this.mapToBoard(this.cells);
+    this.mapToBoard(this.cells);
   }
   
   public changeSize(size: number) {
     this.size = size;
     this.cells = this.builder.build(this.size);
-    this.board = this.mapToBoard(this.cells);
+    this.mapToBoard(this.cells);
   }
 
-  private mapToBoard(cells: Cell[]): Cell[][] {
+  public clear() {
+    this.cells.forEach((cell) => {
+      cell.isAlive = false;
+    });
+    this.mapToBoard(this.cells);
+  }
+
+  private mapToBoard(cells: Cell[]): void {
     let board: Cell[][] = [];
     for (let rowIndex = 0; rowIndex < this.size; rowIndex++) { 
       let row: Cell[] = [];
@@ -49,7 +56,7 @@ export class BoardComponent implements OnInit, OnChanges{
       }
       board.push(row);
     }
-    return board;
+    this.board = board;
   }
 
   public updateCell(newCell: Cell): void {
@@ -60,18 +67,17 @@ export class BoardComponent implements OnInit, OnChanges{
     this.started = !this.started;
     if(this.started){
       this.interval = setInterval(() => {
-        this.board = this.getNextBoard();
-      }, 200)
+        this.getNextBoard();
+      }, 100)
     } else {
       clearInterval(this.interval);
     }
 
   }
 
-  private getNextBoard(): Cell[][] {
+  private getNextBoard(): void {
     this.cells = this.factory.getNextGenBoard(this.cells);
-    let board = this.mapToBoard(this.cells);
-    return board;
+    this.mapToBoard(this.cells);
   }
 
   public generateRandomBoard(): void {
