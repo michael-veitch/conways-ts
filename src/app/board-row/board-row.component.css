@@ -1,0 +1,7 @@
+.cell {
+    float: left;
+}
+
+.row {
+    display: inline-block
+}

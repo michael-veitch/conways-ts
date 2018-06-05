@@ -1,7 +1,5 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CellHelper } from './cell-helper';
-import { Cell } from '../../models/cell';
+import { Cell } from '../models/cell';
 
 describe('Cell Helper', () => {
     const helper = new CellHelper();

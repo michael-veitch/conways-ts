@@ -1,6 +1,13 @@
 <div>
-  <div *ngFor="let index = 0; index < size; index++">
-    <div *ngFor="let cell = 0; cell < size; cell++"></div>
-      <app-cell ></app-cell>
+  <div>
+    <div *ngFor="let row of board">
+      <app-board-row [row]="row" (cellChanged)="updateCell($event)"></app-board-row>
+    </div>
+  </div>
+
+
+  <div>
+    <button (click)="toggleStart()">{{started ? 'Stop' : 'Start'}}</button>
   </div>
 </div>
+

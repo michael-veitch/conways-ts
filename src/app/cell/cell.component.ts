@@ -11,20 +11,17 @@ export class CellComponent implements OnInit {
   public isAlive: boolean;
 
   @Input() cell: Cell;
-  @Output() stateChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() stateChanged: EventEmitter<Cell> = new EventEmitter<Cell>();
   
   constructor() { }
 
   ngOnInit() {
-    if (!this.cell) {
-      this.cell = new Cell(false);
-    }
-    this.isAlive = this.cell.isAlive;
+
   }
 
   public toggleState(): void {
-    this.isAlive = !this.isAlive;
-    this.stateChanged.emit(this.isAlive);
+    this.cell.isAlive = !this.cell.isAlive;
+    this.stateChanged.emit(this.cell);
   }
 
 }

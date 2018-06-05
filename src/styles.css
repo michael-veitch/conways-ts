@@ -2,8 +2,9 @@
 app-cell div {
     border-style: solid;
     border-width: 1px;
-    height: 50px;
-    width: 50px;
+    height: 20px;
+    width: 20px;
+    margin: 1px;
 }
 
 app-cell div.alive{

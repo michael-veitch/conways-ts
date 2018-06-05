@@ -17,7 +17,10 @@ export class BoardContainerComponent implements OnInit {
 
   public changeSize(size: number) {
     this.boardSize = size;
-    console.log(this.boardSize);
+  }
+
+  public start(): void {
+    
   }
 
 }

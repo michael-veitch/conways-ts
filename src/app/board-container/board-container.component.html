@@ -1,8 +1,10 @@
 <div>
-  <app-board [size]="boardSize"></app-board>
-</div>
+  <div>
+    <app-board [size]="boardSize"></app-board>
+  </div>
 
-<div>
-  <input #size type="text" placeholder="Enter size of Board..."/>
-  <button (click)="changeSize(size.value)">Change Size</button>
+  <div>
+    <input #size type="text" placeholder="Enter size of Board..."/>
+    <button (click)="changeSize(size.value)">Change Size</button>
+  </div>
 </div>

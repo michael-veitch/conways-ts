@@ -9,5 +9,5 @@ import { Cell } from './models/cell';
 export class AppComponent {
   title = 'app';
 
-  public cell = new Cell(false);
+  public cell = new Cell(false, 1, 1);
 }

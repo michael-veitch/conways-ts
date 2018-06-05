@@ -1,4 +1,4 @@
-import { Cell } from '../../models/cell';
+import { Cell } from '../models/cell';
 import { IBoardIterator } from '../interfaces/board-iterator';
 
 export class CellHelper implements IBoardIterator {
