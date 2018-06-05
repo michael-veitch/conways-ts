@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Cell } from '../models/cell';
 import { CellsBuilder } from '../builders/board-builder';
 import { GenerationFactory } from '../generation-factory/generation-factory';
@@ -11,11 +11,9 @@ import { CellHelper } from '../helpers/cell-helper';
 })
 export class BoardComponent implements OnInit, OnChanges{
 
-
-  @Input() size: number;
-
   public cells: Cell[];
   public board: Cell[][];
+  public size = 20;
   public started: boolean = false;
 
   public interval;
@@ -31,6 +29,12 @@ export class BoardComponent implements OnInit, OnChanges{
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.cells = this.builder.build(this.size);
+    this.board = this.mapToBoard(this.cells);
+  }
+  
+  public changeSize(size: number) {
+    this.size = size;
     this.cells = this.builder.build(this.size);
     this.board = this.mapToBoard(this.cells);
   }
@@ -57,7 +61,7 @@ export class BoardComponent implements OnInit, OnChanges{
     if(this.started){
       this.interval = setInterval(() => {
         this.board = this.getNextBoard();
-      }, 1000)
+      }, 200)
     } else {
       clearInterval(this.interval);
     }
@@ -68,5 +72,22 @@ export class BoardComponent implements OnInit, OnChanges{
     this.cells = this.factory.getNextGenBoard(this.cells);
     let board = this.mapToBoard(this.cells);
     return board;
+  }
+
+  public generateRandomBoard(): void {
+    this.cells.forEach((cell: Cell) => {
+      let randomNumber = this.generateRandomNumber();
+      if(randomNumber > 0 && randomNumber < 50) {
+        cell.isAlive = false;
+      } else {
+        cell.isAlive = true;
+      }
+    })
+  }
+
+
+  private generateRandomNumber(): number {
+    let randomNumber = Math.floor(Math.random() * 100);
+    return randomNumber;
   }
 }

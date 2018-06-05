@@ -14,3 +14,9 @@ app-cell div.alive{
 app-cell div.dead{
     background: white
 }
+
+
+.row {
+    margin-bottom: -5px;
+    display: inline-block
+}

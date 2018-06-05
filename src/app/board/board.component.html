@@ -4,10 +4,18 @@
       <app-board-row [row]="row" (cellChanged)="updateCell($event)"></app-board-row>
     </div>
   </div>
-
+  
+  <div>
+    <input #size type="text" placeholder="Enter size of Board..."/>
+    <button (click)="changeSize(size.value)">Change Size</button>
+  </div>
 
   <div>
-    <button (click)="toggleStart()">{{started ? 'Stop' : 'Start'}}</button>
+    <button [disabled]="started" (click)="generateRandomBoard()">Generate Random</button>
+  </div>
+
+  <div>
+    <button  (click)="toggleStart()">{{started ? 'Stop' : 'Start'}}</button>
   </div>
 </div>
 
