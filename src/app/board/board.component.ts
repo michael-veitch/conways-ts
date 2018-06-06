@@ -3,6 +3,7 @@ import { Cell } from '../models/cell';
 import { CellsBuilder } from '../builders/board-builder';
 import { GenerationFactory } from '../generation-factory/generation-factory';
 import { CellHelper } from '../helpers/cell-helper';
+import { RandomBoardHelper } from '../helpers/random-board-helper';
 
 @Component({
   selector: 'app-board',
@@ -75,25 +76,15 @@ export class BoardComponent implements OnInit, OnChanges{
 
   }
 
-  private getNextBoard(): void {
-    this.cells = this.factory.getNextGenBoard(this.cells);
-    this.mapToBoard(this.cells);
-  }
-
   public generateRandomBoard(): void {
     this.cells.forEach((cell: Cell) => {
-      let randomNumber = this.generateRandomNumber();
-      if(randomNumber > 0 && randomNumber < 50) {
-        cell.isAlive = false;
-      } else {
-        cell.isAlive = true;
-      }
+      let randomNumber = RandomBoardHelper.generateRandomNumber();
+      cell.isAlive = RandomBoardHelper.doesCellLive(randomNumber, 50);
     })
   }
 
-
-  private generateRandomNumber(): number {
-    let randomNumber = Math.floor(Math.random() * 100);
-    return randomNumber;
+  private getNextBoard(): void {
+    this.cells = this.factory.getNextGenBoard(this.cells);
+    this.mapToBoard(this.cells);
   }
 }
